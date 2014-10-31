@@ -3,12 +3,14 @@
 #include <QtWidgets>
 #include "pushButton.h"
 #include "functions.h"
+#include <QDebug>
+QList<QString> lettersGuessed;
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-    QList<QChar> lettersGuessed;
+
     QGridLayout *layout = new QGridLayout(this);
     Button *button[26];
     for(int i=0; i<26; i++)
@@ -45,5 +47,40 @@ Dialog::Dialog(QWidget *parent) :
 Dialog::~Dialog()
 {
     delete ui;
+}
+QList<QString> ReadWords()
+{
+    QList<QString> wordList;
+    QString filename=":files/words.txt";
+    QFile wordFile(filename);
+    wordFile.open(QFile::ReadOnly | QFile::Text);
+    QTextStream in(&wordFile);
+    QString word;
+    while(!wordFile.atEnd())
+    {
+        in>>word;
+        wordList.append(word);
+    }
+    wordList.append(word);
+    //QString wordText = in.readAll();
+    wordFile.close();
+    return wordList;
+}
+
+QString ChooseWord()
+{
+    srand (time(NULL));
+    QList<QString> *wordList = new QList<QString>(ReadWords());
+
+    QString word=wordList->value(rand() % wordList->length());
+    return word;
+}
+
+void GuessLetter(Button* button)
+{
+    QString letter = button->text().at(0);
+    lettersGuessed.append(letter);
+    qDebug()<<lettersGuessed;
+
 }
 

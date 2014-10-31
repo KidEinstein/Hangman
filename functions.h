@@ -4,7 +4,7 @@
 #include "pushButton.h"
 QList<QString> ReadWords();
 QString ChooseWord();
-void GuessLetter(Button button, QList<QChar> lettersGuessed);
+void GuessLetter(Button* button);
 
 
 #endif // FUNCTIONS_H
