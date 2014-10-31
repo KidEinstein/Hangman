@@ -5,6 +5,7 @@
 #include "functions.h"
 #include <QDebug>
 QList<QString> lettersGuessed;
+QListWidget *letterList;
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
@@ -33,6 +34,10 @@ Dialog::Dialog(QWidget *parent) :
     QString chosenWord=ChooseWord();
     QLabel *label = new QLabel(chosenWord, this);
     layout->addWidget(label);
+    letterList = new QListWidget(this);
+    letterList->addItems(lettersGuessed);
+    layout->addWidget(letterList);
+
 
 
 
@@ -81,6 +86,10 @@ void GuessLetter(Button* button)
     QString letter = button->text().at(0);
     lettersGuessed.append(letter);
     qDebug()<<lettersGuessed;
+    letterList->clear();
+    letterList->addItems(lettersGuessed);
+    letterList->show();
+
 
 }
 
