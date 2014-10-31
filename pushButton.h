@@ -15,7 +15,7 @@ public:
     //Button();
 
 private slots:
-    void slotButtonClicked();
+    void slotButtonClicked(bool checked=false);
 private:
     Ui::Button *ui;
 };
