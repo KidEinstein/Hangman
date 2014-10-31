@@ -23,7 +23,12 @@ Dialog::Dialog(QWidget *parent) :
         connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
     }
     //QLabel *wordLabel = new QLabel(this);
-    ui->listWidget->addItems(ReadWords());
+    //ui->listWidget->addItems(ReadWords());
+    QListWidget *wordList = new QListWidget(this);
+    wordList->addItems(ReadWords());
+    layout->addWidget(wordList);
+
+
 
 
 
