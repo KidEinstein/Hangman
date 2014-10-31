@@ -7,8 +7,9 @@ QList<QString> ReadWords()
     wordFile.open(QFile::ReadOnly | QFile::Text);
     QTextStream in(&wordFile);
     QString word;
-    while(in>>word)
+    while(!wordFile.atEnd())
     {
+        in>>word;
         wordList.append(word);
     }
     wordList.append(word);

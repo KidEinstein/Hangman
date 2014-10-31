@@ -22,9 +22,9 @@ Dialog::Dialog(QWidget *parent) :
             layout->addWidget(button[i],2,i-18);
         connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
     }
-    QLabel *wordLabel = new QLabel(this);
-    wordLabel->setText(ReadWords());
-    layout->addWidget(wordLabel);
+    //QLabel *wordLabel = new QLabel(this);
+    ui->listWidget->addItems(ReadWords());
+
 
 
 
