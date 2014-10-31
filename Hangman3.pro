@@ -13,7 +13,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        dialog.cpp
+        dialog.cpp \
+    pushButton.cpp
 
 HEADERS  += dialog.h \
     pushButton.h

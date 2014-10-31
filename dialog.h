@@ -16,6 +16,8 @@ public:
     ~Dialog();
 private:
     Ui::Dialog *ui;
+
+
 };
 
 #endif // DIALOG_H

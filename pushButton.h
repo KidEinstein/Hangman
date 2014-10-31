@@ -1,7 +1,8 @@
-
 #ifndef PUSHBUTTON_H
 #define PUSHBUTTON_H
+
 #include <QPushButton>
+
 namespace Ui {
 class Button;
 }
@@ -10,8 +11,9 @@ class Button : public QPushButton
 {
     Q_OBJECT
 public:
-    Button();
-    ~Button();
+    explicit Button(QWidget *parent = 0);
+    //Button();
+
 private slots:
     void slotButtonClicked(bool checked=false);
 private:

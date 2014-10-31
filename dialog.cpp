@@ -11,7 +11,7 @@ Dialog::Dialog(QWidget *parent) :
     Button *button[26];
     for(int i=0; i<26; i++)
     {
-        button[i] = new Button();
+        button[i] = new Button(this);
 
         if(i<9)
             layout->addWidget(button[i],0,i);
@@ -19,7 +19,7 @@ Dialog::Dialog(QWidget *parent) :
             layout->addWidget(button[i],1,i-9);
         else
             layout->addWidget(button[i],2,i-18);
-        connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
+        //connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
 
     }
 
@@ -29,10 +29,5 @@ Dialog::Dialog(QWidget *parent) :
 Dialog::~Dialog()
 {
     delete ui;
-}
-
-void Button::slotButtonClicked(bool checked)
-{
-
 }
 
