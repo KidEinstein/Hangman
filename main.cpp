@@ -9,8 +9,9 @@ void ReadWords()
     QFile wordFile("/words.txt");
     wordFile.open(QFile::ReadOnly | QFile::Text);
     QTextStream in(&wordFile);
+    QString word;
     in>>word;
-    wordList.append(word);s
+    wordList.append(word);
     //QString wordText = in.readAll();
     wordFile.close();
 
