@@ -12,14 +12,14 @@ Dialog::Dialog(QWidget *parent) :
     for(int i=0; i<26; i++)
     {
         button[i] = new Button(this);
-
+        button[i]->setText(QString(i+65));
         if(i<9)
             layout->addWidget(button[i],0,i);
         else if(i>=9 && i<18)
             layout->addWidget(button[i],1,i-9);
         else
             layout->addWidget(button[i],2,i-18);
-        //connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
+        connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
 
     }
 
