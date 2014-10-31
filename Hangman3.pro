@@ -20,3 +20,6 @@ HEADERS  += dialog.h \
     pushButton.h
 
 FORMS    += dialog.ui
+
+RESOURCES += \
+    Words.qrc
