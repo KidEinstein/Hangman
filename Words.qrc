@@ -1,1 +1,5 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/files">
+        <file>words.txt</file>
+    </qresource>
+</RCC>

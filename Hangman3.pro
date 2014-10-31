@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         dialog.cpp \
-    pushButton.cpp
+    pushButton.cpp \
+    functions.cpp
 
 HEADERS  += dialog.h \
-    pushButton.h
+    pushButton.h \
+    functions.h
 
 FORMS    += dialog.ui
 

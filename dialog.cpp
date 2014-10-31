@@ -2,6 +2,7 @@
 #include "ui_dialog.h"
 #include <QtWidgets>
 #include "pushButton.h"
+#include "functions.h"
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
@@ -20,8 +21,12 @@ Dialog::Dialog(QWidget *parent) :
         else
             layout->addWidget(button[i],2,i-18);
         connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
-
     }
+    QLabel *wordLabel = new QLabel(this);
+    wordLabel->setText(ReadWords());
+    layout->addWidget(wordLabel);
+
+
 
     this->setLayout(layout);
 }
