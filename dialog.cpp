@@ -8,6 +8,7 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+    QList<QChar> lettersGuessed;
     QGridLayout *layout = new QGridLayout(this);
     Button *button[26];
     for(int i=0; i<26; i++)
@@ -24,9 +25,14 @@ Dialog::Dialog(QWidget *parent) :
     }
     //QLabel *wordLabel = new QLabel(this);
     //ui->listWidget->addItems(ReadWords());
-    QListWidget *wordList = new QListWidget(this);
-    wordList->addItems(ReadWords());
-    layout->addWidget(wordList);
+    //QListWidget *wordList = new QListWidget(this);
+    //wordList->addItems(ReadWords());
+    //layout->addWidget(wordList);
+    QString chosenWord=ChooseWord();
+    QLabel *label = new QLabel(chosenWord, this);
+    layout->addWidget(label);
+
+
 
 
 
