@@ -1,7 +1,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 #include <QtWidgets>
-QString ReadWords();
+QList<QString> ReadWords();
 
 
 #endif // FUNCTIONS_H
