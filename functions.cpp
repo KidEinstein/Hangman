@@ -1,4 +1,6 @@
 #include "functions.h"
+#include "stdlib.h"
+#include "pushButton.h"
 QList<QString> ReadWords()
 {
     QList<QString> wordList;
@@ -18,3 +20,17 @@ QList<QString> ReadWords()
     return wordList;
 }
 
+QString ChooseWord()
+{
+    QList<QString> *wordList = new QList<QString>(ReadWords());
+
+    QString word=wordList->value(rand() % wordList->length());
+    return word;
+}
+
+void GuessLetter(Button button, QList<QChar> lettersGuessed)
+{
+    QChar letter = button.text();
+    lettersGuessed.append(letter);
+
+}
