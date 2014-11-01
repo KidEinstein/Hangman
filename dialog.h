@@ -6,9 +6,24 @@
 #include <QtWidgets>
 
 namespace Ui {
+class Button;
+}
+namespace Ui {
 class Dialog;
 }
-
+class Button;
+class Dialog;
+class Button : public QPushButton
+{
+    Q_OBJECT
+public:
+    explicit Button(QWidget *parent = 0);
+    //Button();
+private slots:
+    void slotButtonClicked(bool checked=false);
+private:
+    Ui::Button *ui;
+};
 class Dialog : public QDialog
 {
     Q_OBJECT
@@ -23,7 +38,14 @@ private:
     QString chosenWord;
     QLabel *label;
     QGridLayout *layout;
+    Button *button[26];
+
 
 };
+
+
+
+
+
 
 #endif // DIALOG_H

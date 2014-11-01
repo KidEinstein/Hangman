@@ -12,20 +12,8 @@ Dialog::Dialog(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    Button *button[26];
     layout = new QGridLayout(this);
-    for(int i=0; i<26; i++)
-    {
-        button[i] = new Button(this);
-        button[i]->setText(QString(i+65));
-        if(i<9)
-            layout->addWidget(button[i],0,i);
-        else if(i>=9 && i<18)
-            layout->addWidget(button[i],1,i-9);
-        else
-            layout->addWidget(button[i],2,i-18);
-        connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
-    }
+    CreateButtons();
     //QLabel *wordLabel = new QLabel(this);
     //ui->listWidget->addItems(ReadWords());
     //QListWidget *wordList = new QListWidget(this);
@@ -83,3 +71,30 @@ void GuessLetter(Button* button)
     letterList->show();
 }
 
+void Dialog::CreateButtons()
+{
+    for(int i=0; i<26; i++)
+    {
+        button[i] = new Button(this);
+        button[i]->setText(QString(i+65));
+        if(i<9)
+            layout->addWidget(button[i],0,i);
+        else if(i>=9 && i<18)
+            layout->addWidget(button[i],1,i-9);
+        else
+            layout->addWidget(button[i],2,i-18);
+        connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
+    }
+}
+
+void Dialog::UpdateLabels()
+{
+    QLabel *letterLabel[chosenWord.length()];
+    for(int i=0; i<chosenWord.length(); i++)
+    {
+        letterLabel[i]->setText(chosenWord.at(i));
+        layout->addWidget(letterLabel[i], 3, i);
+        letterLabel[i]->show();
+    }
+
+}
