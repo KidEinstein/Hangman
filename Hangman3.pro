@@ -13,13 +13,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+        pushButton.cpp \
         dialog.cpp \
-    pushButton.cpp \
     functions.cpp
 CONFIG += console;
-HEADERS  += dialog.h \
-    pushButton.h \
-    functions.h
+HEADERS  += pushButton.h \
+        dialog.h \
+        functions.h
 
 FORMS    += dialog.ui
 

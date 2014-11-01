@@ -10,10 +10,10 @@ Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
-    ui->setupUi(this);
 
-    QGridLayout *layout = new QGridLayout(this);
+    ui->setupUi(this);
     Button *button[26];
+    layout = new QGridLayout(this);
     for(int i=0; i<26; i++)
     {
         button[i] = new Button(this);
@@ -31,20 +31,12 @@ Dialog::Dialog(QWidget *parent) :
     //QListWidget *wordList = new QListWidget(this);
     //wordList->addItems(ReadWords());
     //layout->addWidget(wordList);
-    QString chosenWord=ChooseWord();
+    chosenWord=ChooseWord();
     QLabel *label = new QLabel(chosenWord, this);
     layout->addWidget(label);
     letterList = new QListWidget(this);
     letterList->addItems(lettersGuessed);
     layout->addWidget(letterList);
-
-
-
-
-
-
-
-
 
     this->setLayout(layout);
 }
@@ -89,7 +81,5 @@ void GuessLetter(Button* button)
     letterList->clear();
     letterList->addItems(lettersGuessed);
     letterList->show();
-
-
 }
 

@@ -2,6 +2,8 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include "pushButton.h"
+#include <QtWidgets>
 
 namespace Ui {
 class Dialog;
@@ -16,7 +18,11 @@ public:
     ~Dialog();
 private:
     Ui::Dialog *ui;
-
+    void UpdateLabels();
+    void CreateButtons();
+    QString chosenWord;
+    QLabel *label;
+    QGridLayout *layout;
 
 };
 
