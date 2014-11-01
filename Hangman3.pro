@@ -17,7 +17,7 @@ SOURCES += main.cpp\
         dialog.cpp \
     functions.cpp
 CONFIG += console;
-HEADERS  += pushButton.h \
+HEADERS  += \
         dialog.h \
         functions.h
 

@@ -1,9 +1,10 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 #include <QtWidgets>
-#include "pushButton.h"
 #include "functions.h"
 #include <QDebug>
+#include <QSignalMapper>
+
 QList<QString> lettersGuessed;
 QListWidget *letterList;
 Dialog::Dialog(QWidget *parent) :
@@ -25,7 +26,11 @@ Dialog::Dialog(QWidget *parent) :
     letterList = new QListWidget(this);
     letterList->addItems(lettersGuessed);
     layout->addWidget(letterList);
+    for(int i=0; i<chosenWord.length(); i++)
+    {
+        letterLabel[i] =  new QLabel();
 
+    }
     this->setLayout(layout);
 }
 
@@ -73,8 +78,10 @@ void GuessLetter(Button* button)
 
 void Dialog::CreateButtons()
 {
+    QSignalMapper* signalMapper = new QSignalMapper(this);
     for(int i=0; i<26; i++)
     {
+
         button[i] = new Button(this);
         button[i]->setText(QString(i+65));
         if(i<9)
@@ -83,18 +90,50 @@ void Dialog::CreateButtons()
             layout->addWidget(button[i],1,i-9);
         else
             layout->addWidget(button[i],2,i-18);
-        connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
+        //connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
+        connect(button[i],SIGNAL(pressed()),this,SLOT(slotButtonClicked()));
+
+
+
+
     }
+
 }
 
 void Dialog::UpdateLabels()
 {
-    QLabel *letterLabel[chosenWord.length()];
+
+
+
     for(int i=0; i<chosenWord.length(); i++)
     {
-        letterLabel[i]->setText(chosenWord.at(i));
-        layout->addWidget(letterLabel[i], 3, i);
+
+        qDebug()<<QString(chosenWord.at(i));
+        if(lettersGuessed.contains(QString(chosenWord.at(i)).toUpper()))
+        {
+
+            letterLabel[i]->setText(chosenWord.at(i));
+        }
+        else
+        {
+            letterLabel[i]->setText("_");
+        }
+
+
+
+        layout->addWidget(letterLabel[i], 4, i);
         letterLabel[i]->show();
+
     }
 
 }
+void Dialog::slotButtonClicked()
+{
+    Button* temp = qobject_cast<Button* >(QObject::sender());
+    GuessLetter(temp);
+    temp->setDisabled(true);
+    UpdateLabels();
+
+}
+
+

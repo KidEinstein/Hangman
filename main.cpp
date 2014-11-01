@@ -1,8 +1,6 @@
 #include "dialog.h"
 #include <QApplication>
 #include <QtWidgets>
-#include "pushButton.h"
-
     
 int main(int argc, char *argv[])
 {

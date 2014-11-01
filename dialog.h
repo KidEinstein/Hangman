@@ -2,7 +2,6 @@
 #define DIALOG_H
 
 #include <QDialog>
-#include "pushButton.h"
 #include <QtWidgets>
 
 namespace Ui {
@@ -30,15 +29,21 @@ class Dialog : public QDialog
 
 public:
     explicit Dialog(QWidget *parent = 0);
+    void UpdateLabels();
     ~Dialog();
+signals:
+    void buttonClicked();
+private slots:
+    void slotButtonClicked();
 private:
     Ui::Dialog *ui;
-    void UpdateLabels();
+
     void CreateButtons();
     QString chosenWord;
     QLabel *label;
     QGridLayout *layout;
     Button *button[26];
+    QLabel *letterLabel[10];
 
 
 };
