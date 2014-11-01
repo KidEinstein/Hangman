@@ -2,6 +2,8 @@
 #define PUSHBUTTON_H
 
 #include <QPushButton>
+#include "dialog.h"
+#include <QDialog>
 
 namespace Ui {
 class Button;
