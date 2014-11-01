@@ -4,7 +4,8 @@
 #include "pushButton.h"
 #include "functions.h"
 #include <QDebug>
-
+QList<QString> lettersGuessed;
+QListWidget *letterList;
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
@@ -52,7 +53,7 @@ Dialog::~Dialog()
 {
     delete ui;
 }
-QList<QString> Dialog::ReadWords()
+QList<QString> ReadWords()
 {
     QList<QString> wordList;
     QString filename=":files/words.txt";
@@ -71,7 +72,7 @@ QList<QString> Dialog::ReadWords()
     return wordList;
 }
 
-QString Dialog::ChooseWord()
+QString ChooseWord()
 {
     srand (time(NULL));
     QList<QString> *wordList = new QList<QString>(ReadWords());
@@ -80,7 +81,7 @@ QString Dialog::ChooseWord()
     return word;
 }
 
-void Dialog::GuessLetter(Button* button)
+void GuessLetter(Button* button)
 {
     QString letter = button->text().at(0);
     lettersGuessed.append(letter);
@@ -91,12 +92,4 @@ void Dialog::GuessLetter(Button* button)
 
 
 }
-void Button::slotButtonClicked(bool checked)
-{
-    w.GuessLetter(this);
-    this->setDisabled(true);
-}
-Button::Button(QWidget *parent)
-{
 
-}
