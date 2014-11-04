@@ -20,8 +20,10 @@ public:
     //Button();
 private slots:
     void slotButtonClicked(bool checked=false);
+
 private:
     Ui::Button *ui;
+
 };
 class Dialog : public QDialog
 {
@@ -35,6 +37,7 @@ signals:
     void buttonClicked();
 private slots:
     void slotButtonClicked();
+    void reset();
 private:
     Ui::Dialog *ui;
 
@@ -44,7 +47,11 @@ private:
     QGridLayout *layout;
     Button *button[26];
     QLabel *letterLabel[10];
-
+    QString ChooseWord();
+    QList<QString> ReadWords();
+    int guessesLeft;
+    QMessageBox* gameOver;
+    void create_gameOver();
 
 };
 

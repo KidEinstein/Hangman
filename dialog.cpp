@@ -12,6 +12,8 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
 
+    create_gameOver();
+    guessesLeft=10;
     ui->setupUi(this);
     layout = new QGridLayout(this);
     CreateButtons();
@@ -38,7 +40,7 @@ Dialog::~Dialog()
 {
     delete ui;
 }
-QList<QString> ReadWords()
+QList<QString> Dialog::ReadWords()
 {
     QList<QString> wordList;
     QString filename=":files/words.txt";
@@ -57,7 +59,7 @@ QList<QString> ReadWords()
     return wordList;
 }
 
-QString ChooseWord()
+QString Dialog::ChooseWord()
 {
     srand (time(NULL));
     QList<QString> *wordList = new QList<QString>(ReadWords());
@@ -75,10 +77,21 @@ void GuessLetter(Button* button)
     letterList->addItems(lettersGuessed);
     letterList->show();
 }
+void Dialog::create_gameOver()
+{
+    gameOver = new QMessageBox(this);
+    gameOver->setText("Sorry you ran out of guesses");
+    gameOver->addButton(QMessageBox::Close);
+    gameOver->addButton(QMessageBox::Reset);
+    gameOver->button(QMessageBox::Reset)->setText("New Game");
+    gameOver->setIcon(QMessageBox::Warning);
+    //connect(gameOver->QMessageBox::Close,SIGNAL()
+    connect(gameOver->button(QMessageBox::Close),SIGNAL(clicked()),this,SLOT(close()));
+    connect(gameOver->button(QMessageBox::Reset),SIGNAL(clicked()),this,SLOT(reset()));
+}
 
 void Dialog::CreateButtons()
 {
-    QSignalMapper* signalMapper = new QSignalMapper(this);
     for(int i=0; i<26; i++)
     {
 
@@ -129,11 +142,53 @@ void Dialog::UpdateLabels()
 }
 void Dialog::slotButtonClicked()
 {
+    guessesLeft-=1;
+    if(guessesLeft==0)
+    {
+        gameOver->show();
+    }
+
+
     Button* temp = qobject_cast<Button* >(QObject::sender());
     GuessLetter(temp);
     temp->setDisabled(true);
     UpdateLabels();
 
+}
+void Dialog::reset()
+{
+    if ( this->layout != NULL )
+    {
+        QLayoutItem* item;
+        while ( ( item = this->layout->takeAt( 0 ) ) != NULL )
+        {
+            delete item->widget();
+            delete item;
+        }
+        delete this->layout;
+    }
+
+    guessesLeft=10;
+
+    layout = new QGridLayout(this);
+    CreateButtons();
+    //QLabel *wordLabel = new QLabel(this);
+    //ui->listWidget->addItems(ReadWords());
+    //QListWidget *wordList = new QListWidget(this);
+    //wordList->addItems(ReadWords());
+    //layout->addWidget(wordList);
+    chosenWord=ChooseWord();
+    QLabel *label = new QLabel(chosenWord, this);
+    layout->addWidget(label);
+    letterList = new QListWidget(this);
+    letterList->addItems(lettersGuessed);
+    layout->addWidget(letterList);
+    for(int i=0; i<chosenWord.length(); i++)
+    {
+        letterLabel[i] =  new QLabel();
+
+    }
+    this->setLayout(layout);
 }
 
 
