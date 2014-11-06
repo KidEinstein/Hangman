@@ -52,9 +52,11 @@ private:
     QList<QString> ReadWords();
     int guessesLeft;
     QMessageBox* gameOver;
+    QMessageBox* gameWon;
     void create_gameOver();
     QLabel* guessesLeftLabel;
     //QList<QString> lettersGuessed;
+    void create_GameWon();
 
 public:
     static void GuessLetter(Button* button);

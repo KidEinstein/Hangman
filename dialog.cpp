@@ -3,7 +3,6 @@
 #include <QtWidgets>
 #include "functions.h"
 #include <QDebug>
-#include <QSignalMapper>
 
 QList<QString> lettersGuessed;
 QListWidget *letterList;
@@ -14,6 +13,7 @@ Dialog::Dialog(QWidget *parent) :
 
 
     create_gameOver();
+    create_GameWon();
 
     guessesLeft=10;
     guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
@@ -147,8 +147,30 @@ void Dialog::UpdateLabels()
         letterLabel[i]->show();
 
     }
+    int flag=1;
+    for(int i=0; i<chosenWord.length(); i++)
+    {
+        if(lettersGuessed.contains(QString(chosenWord.at(i)).toUpper())==false)
+            flag=0;
+
+    }
+    if(flag==1)
+        gameWon->show();
 
 }
+void Dialog::create_GameWon()
+{
+    gameWon = new QMessageBox(this);
+    gameWon->setText("You won");
+    gameWon->addButton(QMessageBox::Close);
+    gameWon->addButton(QMessageBox::Reset);
+    gameWon->button(QMessageBox::Reset)->setText("New Game");
+    gameWon->setIcon(QMessageBox::Information);
+    //connect(gameOver->QMessageBox::Close,SIGNAL()
+    connect(gameWon->button(QMessageBox::Close),SIGNAL(clicked()),this,SLOT(close()));
+    connect(gameWon->button(QMessageBox::Reset),SIGNAL(clicked()),this,SLOT(reset()));
+}
+
 void Dialog::slotButtonClicked()
 {
     guessesLeft-=1;
@@ -177,7 +199,7 @@ void Dialog::reset()
         }
         delete this->layout;
     }
-
+    create_GameWon();
     guessesLeft=10;
     guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
     layout = new QGridLayout(this);
@@ -188,6 +210,7 @@ void Dialog::reset()
     //QListWidget *wordList = new QListWidget(this);
     //wordList->addItems(ReadWords());
     //layout->addWidget(wordList);
+    layout->addWidget(guessesLeftLabel);
     chosenWord=ChooseWord();
     QLabel *label = new QLabel(chosenWord, this);
     layout->addWidget(label);
