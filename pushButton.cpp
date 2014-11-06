@@ -2,7 +2,7 @@
 #include "functions.h"
 void Button::slotButtonClicked(bool checked)
 {
-    GuessLetter(this);
+    Dialog::GuessLetter(this);
     this->setDisabled(true);
     QObject* temp = QObject::sender();
 

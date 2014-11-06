@@ -33,6 +33,7 @@ public:
     explicit Dialog(QWidget *parent = 0);
     void UpdateLabels();
     ~Dialog();
+
 signals:
     void buttonClicked();
 private slots:
@@ -54,6 +55,11 @@ private:
     void create_gameOver();
     QLabel* guessesLeftLabel;
     //QList<QString> lettersGuessed;
+
+public:
+    static void GuessLetter(Button* button);
+
+
 };
 
 

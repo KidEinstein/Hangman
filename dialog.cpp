@@ -76,7 +76,7 @@ QString Dialog::ChooseWord()
     return word;
 }
 
-void GuessLetter(Button* button)
+void Dialog::GuessLetter(Button* button)
 {
     QString letter = button->text().at(0);
     lettersGuessed.append(letter);
