@@ -52,7 +52,8 @@ private:
     int guessesLeft;
     QMessageBox* gameOver;
     void create_gameOver();
-
+    QLabel* guessesLeftLabel;
+    //QList<QString> lettersGuessed;
 };
 
 

@@ -12,8 +12,11 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
 
+
     create_gameOver();
+
     guessesLeft=10;
+    guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
     ui->setupUi(this);
     layout = new QGridLayout(this);
     CreateButtons();
@@ -24,7 +27,11 @@ Dialog::Dialog(QWidget *parent) :
     //layout->addWidget(wordList);
     chosenWord=ChooseWord();
     QLabel *label = new QLabel(chosenWord, this);
+
+
+
     layout->addWidget(label);
+    layout->addWidget(guessesLeftLabel);
     letterList = new QListWidget(this);
     letterList->addItems(lettersGuessed);
     layout->addWidget(letterList);
@@ -34,6 +41,7 @@ Dialog::Dialog(QWidget *parent) :
 
     }
     this->setLayout(layout);
+
 }
 
 Dialog::~Dialog()
@@ -118,6 +126,7 @@ void Dialog::UpdateLabels()
 
 
 
+    guessesLeftLabel->setText("Guesses Left: "+QString::number(guessesLeft));
     for(int i=0; i<chosenWord.length(); i++)
     {
 
@@ -143,6 +152,7 @@ void Dialog::UpdateLabels()
 void Dialog::slotButtonClicked()
 {
     guessesLeft-=1;
+
     if(guessesLeft==0)
     {
         gameOver->show();
@@ -169,9 +179,10 @@ void Dialog::reset()
     }
 
     guessesLeft=10;
-
+    guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
     layout = new QGridLayout(this);
     CreateButtons();
+    lettersGuessed.clear();
     //QLabel *wordLabel = new QLabel(this);
     //ui->listWidget->addItems(ReadWords());
     //QListWidget *wordList = new QListWidget(this);
