@@ -12,11 +12,16 @@ Dialog::Dialog(QWidget *parent) :
 {
 
 
-    create_gameOver();
+    createGameOver();
     createGameWon();
 
     guessesLeft=10;
     guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
+    guessesLeftBar = new QProgressBar(this);
+    guessesLeftBar->setMaximum(10);
+    guessesLeftBar->setMinimum(0);
+
+
     ui->setupUi(this);
     layout = new QGridLayout(this);
     CreateButtons();
@@ -35,6 +40,7 @@ Dialog::Dialog(QWidget *parent) :
     letterList = new QListWidget(this);
     letterList->addItems(lettersGuessed);
     layout->addWidget(letterList);
+    layout->addWidget(guessesLeftBar);
     for(int i=0; i<chosenWord.length(); i++)
     {
         letterLabel[i] =  new QLabel();
@@ -85,7 +91,7 @@ void Dialog::GuessLetter(Button* button)
     letterList->addItems(lettersGuessed);
     letterList->show();
 }
-void Dialog::create_gameOver()
+void Dialog::createGameOver()
 {
     gameOver = new QMessageBox(this);
     gameOver->setText("Sorry you ran out of guesses");
@@ -147,6 +153,7 @@ void Dialog::UpdateLabels()
         letterLabel[i]->show();
 
     }
+    guessesLeftBar->setValue(10-guessesLeft);
 
 
 }

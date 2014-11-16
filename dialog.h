@@ -53,11 +53,12 @@ private:
     int guessesLeft;
     QMessageBox* gameOver;
     QMessageBox* gameWon;
-    void create_gameOver();
+    void createGameOver();
     QLabel* guessesLeftLabel;
     //QList<QString> lettersGuessed;
     void createGameWon();
     bool isGameWon();
+    QProgressBar* guessesLeftBar;
 
 public:
     static void GuessLetter(Button* button);
