@@ -56,7 +56,8 @@ private:
     void create_gameOver();
     QLabel* guessesLeftLabel;
     //QList<QString> lettersGuessed;
-    void create_GameWon();
+    void createGameWon();
+    bool isGameWon();
 
 public:
     static void GuessLetter(Button* button);

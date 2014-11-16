@@ -13,7 +13,7 @@ Dialog::Dialog(QWidget *parent) :
 
 
     create_gameOver();
-    create_GameWon();
+    createGameWon();
 
     guessesLeft=10;
     guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
@@ -147,18 +147,10 @@ void Dialog::UpdateLabels()
         letterLabel[i]->show();
 
     }
-    int flag=1;
-    for(int i=0; i<chosenWord.length(); i++)
-    {
-        if(lettersGuessed.contains(QString(chosenWord.at(i)).toUpper())==false)
-            flag=0;
 
-    }
-    if(flag==1)
-        gameWon->show();
 
 }
-void Dialog::create_GameWon()
+void Dialog::createGameWon()
 {
     gameWon = new QMessageBox(this);
     gameWon->setText("You won");
@@ -175,18 +167,39 @@ void Dialog::slotButtonClicked()
 {
     guessesLeft-=1;
 
-    if(guessesLeft==0)
-    {
-        gameOver->show();
-    }
+
 
 
     Button* temp = qobject_cast<Button* >(QObject::sender());
     GuessLetter(temp);
     temp->setDisabled(true);
     UpdateLabels();
+    if(guessesLeft==0)
+    {
+        gameOver->exec();
+    }
+    else if(isGameWon())
+    {
+        gameWon->exec();
+    }
 
 }
+
+bool Dialog::isGameWon()
+{
+    int flag=1;
+    for(int i=0; i<chosenWord.length(); i++)
+    {
+        if(lettersGuessed.contains(QString(chosenWord.at(i)).toUpper())==false)
+            flag=0;
+
+    }
+    if(flag==1)
+        return true;
+    return false;
+}
+
+
 void Dialog::reset()
 {
     if ( this->layout != NULL )
@@ -199,7 +212,7 @@ void Dialog::reset()
         }
         delete this->layout;
     }
-    create_GameWon();
+    createGameWon();
     guessesLeft=10;
     guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
     layout = new QGridLayout(this);
