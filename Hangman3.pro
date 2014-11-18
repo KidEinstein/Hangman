@@ -24,4 +24,5 @@ HEADERS  += \
 FORMS    += dialog.ui
 
 RESOURCES += \
-    Words.qrc
+    Words.qrc \
+    Pictures.qrc

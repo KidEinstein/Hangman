@@ -14,12 +14,17 @@ Dialog::Dialog(QWidget *parent) :
 
     createGameOver();
     createGameWon();
-
+    hangmanLabel = new QLabel(this);
+    for(int i=1; i<=11; i++)
+        hangmanPics.append(":/pics/hangman"+QString::number(i)+".png");
+    hangman = new QPixmap(hangmanPics[0]);
+    hangmanLabel->setPixmap(*hangman);
     guessesLeft=10;
     guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
     guessesLeftBar = new QProgressBar(this);
-    guessesLeftBar->setMaximum(10);
-    guessesLeftBar->setMinimum(0);
+    guessesLeftBar->setRange(0,10);
+    guessesLeftBar->setOrientation(Qt::Vertical);
+    guessesLeftBar->setValue(guessesLeft);
 
 
     ui->setupUi(this);
@@ -37,6 +42,7 @@ Dialog::Dialog(QWidget *parent) :
 
     layout->addWidget(label);
     layout->addWidget(guessesLeftLabel);
+    layout->addWidget(hangmanLabel);
     letterList = new QListWidget(this);
     letterList->addItems(lettersGuessed);
     layout->addWidget(letterList);
@@ -153,7 +159,8 @@ void Dialog::UpdateLabels()
         letterLabel[i]->show();
 
     }
-    guessesLeftBar->setValue(10-guessesLeft);
+    guessesLeftBar->setValue(guessesLeft);
+    hangmanLabel->setPixmap(QPixmap(hangmanPics[10-guessesLeft]));
 
 
 }

@@ -59,6 +59,9 @@ private:
     void createGameWon();
     bool isGameWon();
     QProgressBar* guessesLeftBar;
+    QLabel* hangmanLabel;
+    QList<QString> hangmanPics;
+    QPixmap *hangman;
 
 public:
     static void GuessLetter(Button* button);
