@@ -62,6 +62,7 @@ private:
     QLabel* hangmanLabel;
     QList<QString> hangmanPics;
     QPixmap *hangman;
+    QGridLayout *wordLayout;
 
 public:
     static void GuessLetter(Button* button);

@@ -29,6 +29,8 @@ Dialog::Dialog(QWidget *parent) :
 
     ui->setupUi(this);
     layout = new QGridLayout(this);
+    wordLayout = new QGridLayout(this);
+    layout->addLayout(wordLayout,5,0,1,10);
     CreateButtons();
     //QLabel *wordLabel = new QLabel(this);
     //ui->listWidget->addItems(ReadWords());
@@ -40,20 +42,23 @@ Dialog::Dialog(QWidget *parent) :
 
 
 
-    layout->addWidget(label);
-    layout->addWidget(guessesLeftLabel);
-    layout->addWidget(hangmanLabel);
+    layout->addWidget(label,7,0);
+    layout->addWidget(guessesLeftLabel,6,2,2,2);
+    layout->addWidget(hangmanLabel,0,0,1,10,Qt::AlignCenter);
     letterList = new QListWidget(this);
     letterList->addItems(lettersGuessed);
-    layout->addWidget(letterList);
-    layout->addWidget(guessesLeftBar);
+    layout->addWidget(letterList,6,0,1,2);
+    layout->addWidget(guessesLeftBar,6,1);
     for(int i=0; i<chosenWord.length(); i++)
     {
         letterLabel[i] =  new QLabel();
+        letterLabel[i]->setStyleSheet("border: 2px solid");
+        letterLabel[i]->setAlignment(Qt::AlignCenter);
+        wordLayout->addWidget(letterLabel[i], 0, i);
 
     }
     this->setLayout(layout);
-
+    UpdateLabels();
 }
 
 Dialog::~Dialog()
@@ -118,13 +123,14 @@ void Dialog::CreateButtons()
         button[i] = new Button(this);
         button[i]->setText(QString(i+65));
         if(i<9)
-            layout->addWidget(button[i],0,i);
+            layout->addWidget(button[i],2,i);
         else if(i>=9 && i<18)
-            layout->addWidget(button[i],1,i-9);
+            layout->addWidget(button[i],3,i-9);
         else
-            layout->addWidget(button[i],2,i-18);
+            layout->addWidget(button[i],4,i-18);
         //connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
         connect(button[i],SIGNAL(pressed()),this,SLOT(slotButtonClicked()));
+
 
 
 
@@ -142,7 +148,7 @@ void Dialog::UpdateLabels()
     for(int i=0; i<chosenWord.length(); i++)
     {
 
-        qDebug()<<QString(chosenWord.at(i));
+        //qDebug()<<QString(chosenWord.at(i));
         if(lettersGuessed.contains(QString(chosenWord.at(i)).toUpper()))
         {
 
@@ -155,7 +161,7 @@ void Dialog::UpdateLabels()
 
 
 
-        layout->addWidget(letterLabel[i], 4, i);
+
         letterLabel[i]->show();
 
     }
