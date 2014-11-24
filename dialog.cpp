@@ -25,6 +25,7 @@ Dialog::Dialog(QWidget *parent) :
     guessesLeftBar->setRange(0,10);
     guessesLeftBar->setOrientation(Qt::Vertical);
     guessesLeftBar->setValue(guessesLeft);
+    guessesLeftBar->setFixedWidth(50);
 
 
     ui->setupUi(this);
@@ -48,14 +49,18 @@ Dialog::Dialog(QWidget *parent) :
     letterList = new QListWidget(this);
     letterList->addItems(lettersGuessed);
     layout->addWidget(letterList,6,0,1,2);
-    layout->addWidget(guessesLeftBar,6,1);
+    layout->addWidget(guessesLeftBar,0,30,6,1);
+
+    QFont f( "Courier New" , 30, QFont::Bold);
+
     for(int i=0; i<chosenWord.length(); i++)
     {
         letterLabel[i] =  new QLabel();
+        letterLabel[i]->setFont( f);
         letterLabel[i]->setStyleSheet("border: 2px solid");
         letterLabel[i]->setAlignment(Qt::AlignCenter);
         wordLayout->addWidget(letterLabel[i], 0, i);
-
+        letterLabel[i]->setFixedHeight(38);
     }
     this->setLayout(layout);
     UpdateLabels();
@@ -147,10 +152,12 @@ void Dialog::UpdateLabels()
     guessesLeftLabel->setText("Guesses Left: "+QString::number(guessesLeft));
     for(int i=0; i<chosenWord.length(); i++)
     {
-
+        qDebug()<<letterLabel[i]->size();
         //qDebug()<<QString(chosenWord.at(i));
         if(lettersGuessed.contains(QString(chosenWord.at(i)).toUpper()))
         {
+
+
 
             letterLabel[i]->setText(chosenWord.at(i));
         }
