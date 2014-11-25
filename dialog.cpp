@@ -5,33 +5,33 @@
 #include <QDebug>
 
 QList<QString> lettersGuessed;
-QListWidget *letterList;
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
-
-
+    //setAttribute(Qt::WA_TranslucentBackground);
+    this->setStyleSheet("background-color: rgba(255, 255, 0, 50);");
     createGameOver();
     createGameWon();
+
     hangmanLabel = new QLabel(this);
     for(int i=1; i<=11; i++)
         hangmanPics.append(":/pics/hangman"+QString::number(i)+".png");
     hangman = new QPixmap(hangmanPics[0]);
     hangmanLabel->setPixmap(*hangman);
     guessesLeft=10;
-    guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
     guessesLeftBar = new QProgressBar(this);
     guessesLeftBar->setRange(0,10);
     guessesLeftBar->setOrientation(Qt::Vertical);
     guessesLeftBar->setValue(guessesLeft);
-    guessesLeftBar->setFixedWidth(50);
 
 
     ui->setupUi(this);
     layout = new QGridLayout(this);
-    wordLayout = new QGridLayout(this);
+    wordLayout = new QBoxLayout(QBoxLayout::LeftToRight, this);
+
     layout->addLayout(wordLayout,5,0,1,10);
+
     CreateButtons();
     //QLabel *wordLabel = new QLabel(this);
     //ui->listWidget->addItems(ReadWords());
@@ -39,29 +39,32 @@ Dialog::Dialog(QWidget *parent) :
     //wordList->addItems(ReadWords());
     //layout->addWidget(wordList);
     chosenWord=ChooseWord();
-    QLabel *label = new QLabel(chosenWord, this);
+    qDebug()<<chosenWord;
+    titleLabel = new QLabel("Hangman");
+    titleLabel->setFont(QFont("Herculanum",70));
+    layout->addWidget(titleLabel,0,0,1,10,Qt::AlignCenter);
 
 
 
-    layout->addWidget(label,7,0);
-    layout->addWidget(guessesLeftLabel,6,2,2,2);
-    layout->addWidget(hangmanLabel,0,0,1,10,Qt::AlignCenter);
-    letterList = new QListWidget(this);
-    letterList->addItems(lettersGuessed);
-    layout->addWidget(letterList,6,0,1,2);
+
+
+    layout->addWidget(hangmanLabel,1,0,1,10,Qt::AlignCenter);
     layout->addWidget(guessesLeftBar,0,30,6,1);
 
-    QFont f( "Courier New" , 30, QFont::Bold);
-
+    QFont f( "Chalkduster" , 50);
+    wordLayout->addStretch();
     for(int i=0; i<chosenWord.length(); i++)
     {
         letterLabel[i] =  new QLabel();
         letterLabel[i]->setFont( f);
         letterLabel[i]->setStyleSheet("border: 2px solid");
         letterLabel[i]->setAlignment(Qt::AlignCenter);
-        wordLayout->addWidget(letterLabel[i], 0, i);
-        letterLabel[i]->setFixedHeight(38);
+        wordLayout->addWidget(letterLabel[i]);
+
+        letterLabel[i]->setFixedSize(60,70);
     }
+    wordLayout->addStretch();
+
     this->setLayout(layout);
     UpdateLabels();
 }
@@ -102,10 +105,8 @@ void Dialog::GuessLetter(Button* button)
 {
     QString letter = button->text().at(0);
     lettersGuessed.append(letter);
-    qDebug()<<lettersGuessed;
-    letterList->clear();
-    letterList->addItems(lettersGuessed);
-    letterList->show();
+    if(!chosenWord.contains(letter, Qt::CaseInsensitive))
+        guessesLeft-=1;
 }
 void Dialog::createGameOver()
 {
@@ -122,10 +123,13 @@ void Dialog::createGameOver()
 
 void Dialog::CreateButtons()
 {
+    QFont f( "American Typewriter" , 30, QFont::Bold);
     for(int i=0; i<26; i++)
     {
 
+
         button[i] = new Button(this);
+        button[i]->setFont(f);
         button[i]->setText(QString(i+65));
         if(i<9)
             layout->addWidget(button[i],2,i);
@@ -147,12 +151,9 @@ void Dialog::CreateButtons()
 void Dialog::UpdateLabels()
 {
 
-
-
-    guessesLeftLabel->setText("Guesses Left: "+QString::number(guessesLeft));
     for(int i=0; i<chosenWord.length(); i++)
     {
-        qDebug()<<letterLabel[i]->size();
+
         //qDebug()<<QString(chosenWord.at(i));
         if(lettersGuessed.contains(QString(chosenWord.at(i)).toUpper()))
         {
@@ -192,7 +193,7 @@ void Dialog::createGameWon()
 
 void Dialog::slotButtonClicked()
 {
-    guessesLeft-=1;
+
 
 
 
@@ -241,7 +242,7 @@ void Dialog::reset()
     }
     createGameWon();
     guessesLeft=10;
-    guessesLeftLabel = new QLabel("Guesses Left: "+QString::number(guessesLeft),this);
+
     layout = new QGridLayout(this);
     CreateButtons();
     lettersGuessed.clear();
@@ -250,13 +251,9 @@ void Dialog::reset()
     //QListWidget *wordList = new QListWidget(this);
     //wordList->addItems(ReadWords());
     //layout->addWidget(wordList);
-    layout->addWidget(guessesLeftLabel);
     chosenWord=ChooseWord();
     QLabel *label = new QLabel(chosenWord, this);
     layout->addWidget(label);
-    letterList = new QListWidget(this);
-    letterList->addItems(lettersGuessed);
-    layout->addWidget(letterList);
     for(int i=0; i<chosenWord.length(); i++)
     {
         letterLabel[i] =  new QLabel();

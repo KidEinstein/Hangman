@@ -62,10 +62,11 @@ private:
     QLabel* hangmanLabel;
     QList<QString> hangmanPics;
     QPixmap *hangman;
-    QGridLayout *wordLayout;
+    QBoxLayout *wordLayout;
+    QLabel* titleLabel;
 
 public:
-    static void GuessLetter(Button* button);
+    void GuessLetter(Button* button);
 
 
 };
