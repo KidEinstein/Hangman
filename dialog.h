@@ -38,7 +38,7 @@ signals:
     void buttonClicked();
 private slots:
     void slotButtonClicked();
-    void reset();
+    void newGame();
 private:
     Ui::Dialog *ui;
 
@@ -64,6 +64,7 @@ private:
     QPixmap *hangman;
     QBoxLayout *wordLayout;
     QLabel* titleLabel;
+    QList<QString> *lettersGuessed;
 
 public:
     void GuessLetter(Button* button);
