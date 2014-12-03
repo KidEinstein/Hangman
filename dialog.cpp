@@ -30,7 +30,6 @@ QList<QString> Dialog::ReadWords()
         wordList.append(word);
     }
     wordList.append(word);
-    //QString wordText = in.readAll();
     wordFile.close();
     return wordList;
 }
@@ -59,7 +58,6 @@ void Dialog::createGameOver()
     gameOver->addButton(QMessageBox::Reset);
     gameOver->button(QMessageBox::Reset)->setText("New Game");
     gameOver->setIcon(QMessageBox::Warning);
-    //connect(gameOver->QMessageBox::Close,SIGNAL()
     connect(gameOver->button(QMessageBox::Close),SIGNAL(clicked()),this,SLOT(close()));
     connect(gameOver->button(QMessageBox::Reset),SIGNAL(clicked()),this,SLOT(newGame()));
 }
@@ -80,7 +78,6 @@ void Dialog::CreateButtons()
             layout->addWidget(button[i],3,i-9);
         else
             layout->addWidget(button[i],4,i-18);
-        //connect(button[i],SIGNAL(pressed()),button[i],SLOT(slotButtonClicked()));
         connect(button[i],SIGNAL(pressed()),this,SLOT(slotButtonClicked()));
 
 
@@ -97,7 +94,6 @@ void Dialog::UpdateLabels()
     for(int i=0; i<chosenWord.length(); i++)
     {
 
-        //qDebug()<<QString(chosenWord.at(i));
         if(lettersGuessed->contains(QString(chosenWord.at(i)).toUpper()))
         {
 
@@ -129,7 +125,7 @@ void Dialog::createGameWon()
     gameWon->addButton(QMessageBox::Reset);
     gameWon->button(QMessageBox::Reset)->setText("New Game");
     gameWon->setIcon(QMessageBox::Information);
-    //connect(gameOver->QMessageBox::Close,SIGNAL()
+
     connect(gameWon->button(QMessageBox::Close),SIGNAL(clicked()),this,SLOT(close()));
     connect(gameWon->button(QMessageBox::Reset),SIGNAL(clicked()),this,SLOT(newGame()));
 }
@@ -167,39 +163,6 @@ bool Dialog::isGameWon()
 }
 
 
-//void Dialog::reset()
-//{
-//    if ( this->layout != NULL )
-//    {
-//        QLayoutItem* item;
-//        while ( ( item = this->layout->takeAt( 0 ) ) != NULL )
-//        {
-//            delete item->widget();
-//            delete item;
-//        }
-//        delete this->layout;
-//    }
-//    createGameWon();
-//    guessesLeft=10;
-
-//    layout = new QGridLayout(this);
-//    CreateButtons();
-//    lettersGuessed.clear();
-//    //QLabel *wordLabel = new QLabel(this);
-//    //ui->listWidget->addItems(ReadWords());
-//    //QListWidget *wordList = new QListWidget(this);
-//    //wordList->addItems(ReadWords());
-//    //layout->addWidget(wordList);
-//    chosenWord=ChooseWord();
-//    QLabel *label = new QLabel(chosenWord, this);
-//    layout->addWidget(label);
-//    for(int i=0; i<chosenWord.length(); i++)
-//    {
-//        letterLabel[i] =  new QLabel();
-
-//    }
-//    this->setLayout(layout);
-//}
 void Dialog::newGame()
 {
     QLayoutItem* item;
@@ -245,11 +208,6 @@ void Dialog::newGame()
     layout->addLayout(wordLayout,5,0,1,10);
 
     CreateButtons();
-    //QLabel *wordLabel = new QLabel(this);
-    //ui->listWidget->addItems(ReadWords());
-    //QListWidget *wordList = new QListWidget(this);
-    //wordList->addItems(ReadWords());
-    //layout->addWidget(wordList);
     chosenWord=ChooseWord();
     qDebug()<<chosenWord;
     titleLabel = new QLabel("Hangman");
@@ -276,8 +234,6 @@ void Dialog::newGame()
         letterLabel[i]->setFixedSize(60,70);
     }
     wordLayout->addStretch();
-
-    this->setLayout(layout);
     UpdateLabels();
 }
 

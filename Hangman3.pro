@@ -13,9 +13,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        pushButton.cpp \
-        dialog.cpp \
-    functions.cpp
+        dialog.cpp
 CONFIG += console;
 HEADERS  += \
         dialog.h \
